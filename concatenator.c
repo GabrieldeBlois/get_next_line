@@ -5,7 +5,7 @@
 ** Login   <matthis.le-texier@epitech.eu@epitech.eu>
 **
 ** Started on  Sun Jun  4 16:29:16 2017 Matthis Le Texier
-** Last update Sun Jun  4 16:56:37 2017 Matthis Le Texier
+** Last update Tue Jun  6 15:58:43 2017 gaby
 */
 
 #include <fcntl.h>
@@ -40,7 +40,6 @@ static char *search_the_line(char **buff, unsigned int *currentpos)
   tmp[i] = '\0';
   if (tmp[i - 1] == '\r')
     tmp[i - 1] = '\0';
-  printf("search_the_line res: '%s'\n", tmp);
   if (!(*buff)[*currentpos + i])
       return (free(*buff), *buff = NULL, *currentpos = 0, tmp);
   *currentpos += i + 1;
@@ -54,7 +53,6 @@ char *get_next_line(int fd)
   char read_buffer[BUF_SIZE];
 
   memset(read_buffer, 0, BUF_SIZE);
-  printf("buff: %s\n", buff);
   if (buff && strlen(buff) != 0)
     return (search_the_line(&buff, &currentpos));
   if (read(fd, read_buffer, GET_NEXT_LINE_ACTUAL_BUFFLEN) < 0)
@@ -65,11 +63,11 @@ char *get_next_line(int fd)
   return (search_the_line(&buff, &currentpos));
 }
 
-/*int main()
+int main()
 {
     char *tmp = NULL;
 
-    int fd = open("./caca", O_RDONLY);
+    int fd = open("./txt", O_RDONLY);
     if (fd <= 0)
     {
         perror("open");
@@ -81,6 +79,5 @@ char *get_next_line(int fd)
         //printf("%s\n", tmp);
         free(tmp);
     }
-
-    free(tmp);
-}*/
+    close(fd);
+}
